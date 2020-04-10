@@ -16,7 +16,7 @@ describe('Test Suite for Locator Strategies', function () {
 
     it('Should Add to Cart element via EQ', function () {
         //using .eq you find and specific element in a array
-        cy.get('.products').as('productLocator')
+        cy.get('.products').as('productLocator') //.as is a alias to reuse locators
         cy.get('@productLocator').find('.product').eq(2).contains('ADD TO CART').click().should('contain', "ADDED")
     })
 
