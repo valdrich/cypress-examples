@@ -23,10 +23,33 @@ describe('How to handle Web UI Elements with Cypress', function () {
         cy.get('.ui-menu-item div').each(($el, index, $list) => {
             if ($el.text() === 'Canada') {
                 $el.click()
-                //cy.get(':nth-child(4) > .product-action > button').should('contain', "ADDED")
             }
         })
         cy.get('#autocomplete').should('have.value','Canada')
+    })
+
+    it('Visible and Invisible objects', () => {
+        cy.get('#displayed-text').should('be.visible')
+        cy.get('#hide-textbox').click()
+        cy.get('#displayed-text').should('not.be.visible')
+        cy.get('#show-textbox').click()
+        cy.get('#displayed-text').should('be.visible')
+    })
+
+    it('Radio', () => {
+        cy.get('[value="radio2"]').should('be.not.be.checked')
+        cy.get('[value="radio2"]').check().should('be.checked')
+
+    })
+
+    it('Alerts', () => {
+        cy.get('#name').type('Poliane')
+        cy.get('#alertbtn').click() //it'll be displayed an alert. Cypress automatically handles it.
+        cy.on('window:alert', (str) => {
+            expect(str).to.contains('Poliane')
+        })
+        //cy.get('#confirmbtn').click()
+
     })
 
 })
