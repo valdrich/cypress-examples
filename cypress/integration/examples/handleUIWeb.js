@@ -79,4 +79,12 @@ describe('How to handle Web UI Elements with Cypress', function () {
         cy.url().should('include','top')        
     })
 
+    it('Child Window', () => {
+        cy.get('#opentab').then(function(el){
+            const url=el.prop('href')
+            cy.log(url)
+            cy.visit(url)
+        }) 
+    })
+
 })
