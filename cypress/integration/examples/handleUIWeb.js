@@ -6,18 +6,18 @@ describe('How to handle Web UI Elements with Cypress', function () {
         cy.visit('https://rahulshettyacademy.com/AutomationPractice/')
     })
 
-    it('Checkbox', () => {        
+    it('Checkbox', () => {
         //check one element and assert
-        cy.get('#checkBoxOption1').check().should('be.checked').and('have.value','option1')
+        cy.get('#checkBoxOption1').check().should('be.checked').and('have.value', 'option1')
         //uncheck one element and assert
         cy.get('#checkBoxOption1').uncheck().should('not.be.checked')
         //check multiple checkboxes and assert
-        cy.get('input[type="checkbox"]').check(['option2','option3']).should('be.checked')
+        cy.get('input[type="checkbox"]').check(['option2', 'option3']).should('be.checked')
     })
 
     it('Dropdown', () => {
         //static dropdown
-        cy.get('select').select('option2').should('have.value','option2')
+        cy.get('select').select('option2').should('have.value', 'option2')
         //dynamic dropdown
         cy.get('#autocomplete').type('Can')
         cy.get('.ui-menu-item div').each(($el, index, $list) => {
@@ -25,7 +25,7 @@ describe('How to handle Web UI Elements with Cypress', function () {
                 $el.click()
             }
         })
-        cy.get('#autocomplete').should('have.value','Canada')
+        cy.get('#autocomplete').should('have.value', 'Canada')
     })
 
     it('Visible and Invisible objects', () => {
@@ -39,7 +39,6 @@ describe('How to handle Web UI Elements with Cypress', function () {
     it('Radio', () => {
         cy.get('[value="radio2"]').should('be.not.be.checked')
         cy.get('[value="radio2"]').check().should('be.checked')
-
     })
 
     it('Alerts', () => {
@@ -48,8 +47,36 @@ describe('How to handle Web UI Elements with Cypress', function () {
         cy.on('window:alert', (str) => {
             expect(str).to.contains('Poliane')
         })
-        //cy.get('#confirmbtn').click()
+        cy.get('#confirmbtn').click()
+    })
 
+    it('Testing new tab using JQuery', () => {
+        //testing using JQuery, removing the Target Attribute
+        cy.get('#opentab').invoke('removeAttr', 'target').click()
+        cy.go('back')
+        cy.url().should('include', 'AutomationPractice')
+    })
+
+    it('Web Tables', () => {
+        cy.get('tr td:nth-child(2)').each(($el, index, $list) => {
+            const text = $el.text()
+            if (text.includes('Python')) {
+                cy.get('tr td:nth-child(2)').eq(index).next().then(function (price) {
+                    const priceText = price.text()
+                    expect(priceText).to.equal('25')
+                }
+                )
+            }
+        })
+    })
+
+    it('Mouse Hover Popus', () => {
+        //Possible to use with the line below as well. With this way the element will open
+        //and then click
+        //cy.get('div.mouse-hover-content').invoke('show')   
+        //Opt to use the line above, the {force : true} should be deleted   
+        cy.contains('Top').click({force : true}) //clicked without opening
+        cy.url().should('include','top')        
     })
 
 })
