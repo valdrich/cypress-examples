@@ -1,4 +1,6 @@
 ///<reference types="Cypress" />
+///<reference types="Cypress-iframe" />
+import 'cypress-iframe'
 
 describe('How to handle Web UI Elements with Cypress', function () {
 
@@ -75,16 +77,22 @@ describe('How to handle Web UI Elements with Cypress', function () {
         //and then click
         //cy.get('div.mouse-hover-content').invoke('show')   
         //Opt to use the line above, the {force : true} should be deleted   
-        cy.contains('Top').click({force : true}) //clicked without opening
-        cy.url().should('include','top')        
+        cy.contains('Top').click({ force: true }) //clicked without opening
+        cy.url().should('include', 'top')
+    })
+
+    it('Frame', () => {
+        cy.frameLoaded('#courses-iframe')
+        cy.iframe().find("a[href*='mentorship']").eq(0).click()
+        cy.iframe().find("h1[class*='pricing-title']").should('have.length', 2)
     })
 
     it('Child Window', () => {
-        cy.get('#opentab').then(function(el){
-            const url=el.prop('href')
+        cy.get('#opentab').then(function (el) {
+            const url = el.prop('href')
             cy.log(url)
             cy.visit(url)
-        }) 
+        })
     })
 
 })
