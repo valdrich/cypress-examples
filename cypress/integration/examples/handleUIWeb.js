@@ -4,7 +4,7 @@ import 'cypress-iframe'
 
 describe('How to handle Web UI Elements with Cypress', function () {
 
-    it('Visit page', () => {
+    before(() => {
         cy.visit('https://rahulshettyacademy.com/AutomationPractice/')
     })
 

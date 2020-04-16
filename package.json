@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/valdrich/cypress-examples#readme",
   "devDependencies": {
-    "cypress": "^4.3.0"
+    "cypress": "^4.3.0",
+    "cypress-iframe": "^1.0.1"
   }
 }
