@@ -17,5 +17,11 @@ describe('How to use Fixtures to control Data Driven', function () {
         cy.get('#inlineRadio3').should('be.disabled')
     })
 
-
+    it('Using multiple datas from Json with customized commands', () => {
+        cy.get(':nth-child(2) > .nav-link').click()
+        this.data.productName.forEach(element => {
+            //selectProduct can be found in support/commands.js
+            cy.selectProduct(element)
+        });
+    })
 })
